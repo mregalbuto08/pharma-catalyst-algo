@@ -1,0 +1,48 @@
+name: Monthly Scan
+
+on:
+  schedule:
+    - cron: '0 6 1-7 * 1'  # Primo lunedi del mese alle 06:00 UTC
+  workflow_dispatch:          # Permette run manuale dalla UI GitHub
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Initialize database
+        run: python db/database.py
+        env:
+          DB_PATH: pharma_algo.db
+
+      - name: Run monthly scanner
+        run: python modules/scanner.py
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+          DB_PATH: pharma_algo.db
+
+      - name: Generate report
+        run: python modules/report.py
+        env:
+          DB_PATH: pharma_algo.db
+
+      - name: Commit database and report
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add pharma_algo.db web/index.html
+          git diff --staged --quiet || git commit -m "Monthly scan - $(date +'%Y-%m-%d')"
+          git push
