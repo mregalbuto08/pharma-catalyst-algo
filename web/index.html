@@ -6,126 +6,180 @@
 <title>PharmaCatalyst — 29 May 2026</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f7; color: #1d1d1f; }
-  .nav { background: white; padding: 14px 24px; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; justify-content: space-between; }
-  .logo { font-size: 16px; font-weight: 600; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f2f5; color: #1d1d1f; }
+  .nav { background: white; padding: 14px 28px; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .logo { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
   .logo span { color: #1D9E75; }
-  .nav-right { font-size: 13px; color: #6e6e73; }
-  .main { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
+  .nav-right { font-size: 12px; color: #8e8e93; }
+  .main { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
   .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
-  .metric { background: white; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-  .metric-label { font-size: 12px; color: #6e6e73; margin-bottom: 6px; }
-  .metric-value { font-size: 24px; font-weight: 600; }
-  .metric-value.green { color: #1D9E75; }
-  .metric-value.red { color: #D85A30; }
-  .section-title { font-size: 11px; font-weight: 600; color: #6e6e73; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-  .card { background: white; border-radius: 12px; padding: 18px 20px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border-left: 3px solid transparent; }
-  .card.action { border-left-color: #D85A30; }
-  .card.entra { border-left-color: #1D9E75; }
-  .card.watch { border-left-color: #378ADD; }
-  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-  .ticker { font-size: 16px; font-weight: 600; }
-  .company { font-size: 13px; color: #6e6e73; margin-top: 2px; }
-  .badges { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-  .badge { font-size: 11px; padding: 3px 9px; border-radius: 20px; font-weight: 500; }
+  .metric { background: white; border-radius: 14px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .metric-label { font-size: 12px; color: #8e8e93; margin-bottom: 6px; font-weight: 500; }
+  .metric-value { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+  .metric-sub { font-size: 12px; color: #aeaeb2; margin-top: 3px; }
+  .green { color: #1D9E75; }
+  .red { color: #D85A30; }
+  .amber { color: #EF9F27; }
+  .section { margin-bottom: 28px; }
+  .section-title { font-size: 11px; font-weight: 700; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; padding-left: 2px; }
+  .card { background: white; border-radius: 16px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow: hidden; border: 1px solid #f0f0f0; }
+  .card-header { padding: 18px 20px 16px; border-bottom: 1px solid #f5f5f5; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .card-header-left { flex: 1; }
+  .card-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .ticker { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+  .company-name { font-size: 13px; color: #6e6e73; margin-top: 2px; }
+  .drug-info { font-size: 13px; color: #3a3a3c; margin-top: 4px; font-weight: 500; }
+  .badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 600; white-space: nowrap; }
   .badge-green { background: #e1f5ee; color: #0f6e56; }
   .badge-amber { background: #faeeda; color: #854f0b; }
-  .badge-blue { background: #e6f1fb; color: #185fa5; }
   .badge-red { background: #faece7; color: #993c1d; }
+  .badge-blue { background: #e6f1fb; color: #185fa5; }
   .badge-gray { background: #f0f0f0; color: #555; }
-  .ev { font-size: 15px; font-weight: 600; color: #1D9E75; }
-  .ev.warn { color: #EF9F27; }
-  .fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
-  .field-label { font-size: 11px; color: #8e8e93; margin-bottom: 2px; }
-  .field-value { font-size: 13px; font-weight: 500; }
-  .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
-  .bar-label { font-size: 11px; color: #8e8e93; width: 56px; }
-  .bar-bg { flex: 1; height: 4px; background: #f0f0f0; border-radius: 2px; }
-  .bar-fill { height: 100%; border-radius: 2px; }
-  .bar-val { font-size: 11px; font-weight: 500; width: 28px; text-align: right; color: #555; }
-  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
-  .tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; }
-  .tag-pos { background: #eaf3de; color: #3b6d11; }
-  .tag-neg { background: #fcebeb; color: #a32d2d; }
-  .alert-box { background: #fff8e1; border: 1px solid #ffe082; border-radius: 10px; padding: 14px 16px; margin-bottom: 24px; }
-  .alert-title { font-size: 13px; font-weight: 600; color: #e65100; margin-bottom: 8px; }
-  .alert-item { font-size: 13px; color: #555; padding: 4px 0; border-bottom: 1px solid #fff3cd; }
-  .alert-item:last-child { border-bottom: none; }
-  .wait-box { background: white; border-radius: 12px; padding: 32px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
-  .wait-title { font-size: 18px; font-weight: 600; color: #1d1d1f; margin-bottom: 8px; }
-  .wait-sub { font-size: 14px; color: #6e6e73; }
-  .footer { text-align: center; font-size: 11px; color: #8e8e93; padding: 24px 0; }
-  @media (max-width: 600px) {
+  .ev-value { font-size: 18px; font-weight: 700; }
+  .card-body { padding: 18px 20px; }
+  .card-section { margin-bottom: 20px; }
+  .card-section:last-child { margin-bottom: 0; }
+  .card-section-title { font-size: 11px; font-weight: 700; color: #aeaeb2; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px; }
+  .fields-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .fields-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .field { background: #f9f9fb; border-radius: 10px; padding: 10px 12px; }
+  .field-label { font-size: 11px; color: #8e8e93; margin-bottom: 4px; font-weight: 500; }
+  .field-value { font-size: 14px; font-weight: 600; color: #1d1d1f; }
+  .score-section { display: flex; flex-direction: column; gap: 8px; }
+  .score-row { display: flex; align-items: center; gap: 10px; }
+  .score-label { font-size: 12px; color: #6e6e73; width: 80px; font-weight: 500; }
+  .score-bar-bg { flex: 1; height: 6px; background: #f0f0f0; border-radius: 3px; overflow: hidden; }
+  .score-bar-fill { height: 100%; border-radius: 3px; }
+  .score-val { font-size: 13px; font-weight: 700; width: 32px; text-align: right; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 12px; padding: 4px 10px; border-radius: 6px; font-weight: 500; }
+  .tag-pos { background: #eaf3de; color: #2d5a0e; }
+  .tag-neg { background: #fde8e8; color: #8b1a1a; }
+  .price-block { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+  .price-big { font-size: 28px; font-weight: 700; letter-spacing: -1px; }
+  .price-change { font-size: 14px; font-weight: 600; }
+  .price-meta { font-size: 12px; color: #8e8e93; }
+  .levels-row { display: flex; gap: 10px; margin-top: 12px; }
+  .level-box { flex: 1; background: #f9f9fb; border-radius: 10px; padding: 10px 12px; text-align: center; }
+  .level-label { font-size: 10px; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 4px; }
+  .level-value { font-size: 15px; font-weight: 700; }
+  .level-value.stop { color: #D85A30; }
+  .level-value.target { color: #1D9E75; }
+  .level-pct { font-size: 11px; color: #8e8e93; margin-top: 2px; }
+  .log-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+  .log-item:last-child { border-bottom: none; }
+  .log-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .log-text { font-size: 13px; color: #3a3a3c; line-height: 1.5; }
+  .log-date { font-size: 11px; color: #8e8e93; margin-top: 2px; }
+  .alert-box { background: #fff8e6; border: 1px solid #ffe082; border-radius: 12px; padding: 14px 16px; margin-bottom: 20px; }
+  .alert-title { font-size: 13px; font-weight: 700; color: #b45309; margin-bottom: 8px; }
+  .alert-item { font-size: 13px; color: #78350f; padding: 4px 0; }
+  .wait-box { background: white; border-radius: 16px; padding: 48px 32px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .wait-title { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .wait-sub { font-size: 14px; color: #6e6e73; line-height: 1.6; }
+  .divider { border: none; border-top: 1px solid #f0f0f0; margin: 16px 0; }
+  .footer { text-align: center; font-size: 12px; color: #aeaeb2; padding: 32px 0 16px; }
+  @media (max-width: 700px) {
     .metrics { grid-template-columns: repeat(2, 1fr); }
-    .fields { grid-template-columns: repeat(2, 1fr); }
+    .fields-grid { grid-template-columns: repeat(2, 1fr); }
+    .fields-grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .levels-row { flex-wrap: wrap; }
   }
 </style>
 </head>
 <body>
 <nav class="nav">
   <div class="logo">Pharma<span>Catalyst</span></div>
-  <div class="nav-right">Aggiornato 15:14 · 29 May 2026</div>
+  <div class="nav-right">Aggiornato 15:35 · 29 May 2026</div>
 </nav>
 <div class="main">
-
   <div class="metrics">
     <div class="metric">
       <div class="metric-label">Opportunita attive</div>
       <div class="metric-value green">1</div>
+      <div class="metric-sub">sopra soglia EV</div>
     </div>
     <div class="metric">
       <div class="metric-label">Azioni richieste</div>
       <div class="metric-value red">1</div>
+      <div class="metric-sub">oggi</div>
     </div>
     <div class="metric">
       <div class="metric-label">In watchlist</div>
       <div class="metric-value">0</div>
+      <div class="metric-sub">da monitorare</div>
     </div>
     <div class="metric">
       <div class="metric-label">EV medio</div>
       <div class="metric-value green">+38.2%</div>
+      <div class="metric-sub">expected value</div>
     </div>
-  </div>
-
-  
-
-  <div class="section-title">Opportunita attive</div><div class="card action">
-  <div class="card-header">
-    <div>
-      <div class="ticker">VRDN <span style="font-size:13px;font-weight:400;color:#8e8e93">· Viridian Therapeutics</span></div>
-      <div class="company">Veligrotug · Thyroid Eye Disease cronica</div>
-    </div>
-    <div class="badges">
-      <span class="badge badge-green">PDUFA</span>
-      <span class="ev ">EV +38.2%</span>
-      <span class="badge badge-gray">TIENI</span>
-    </div>
-  </div>
-  <div class="fields">
-    <div><div class="field-label">Fase</div><div class="field-value">PDUFA</div></div>
-    <div><div class="field-label">Data catalista</div><div class="field-value">2026-06-30 · CERTA</div></div>
-    <div><div class="field-label">Prezzo attuale</div><div class="field-value">$17.32 <span style="color:#1D9E75">(+0.8%)</span></div></div>
-  </div>
-  <div class="bar-row">
-    <span class="bar-label">Scientifico</span>
-    <div class="bar-bg"><div class="bar-fill" style="width:82%;background:#1D9E75;"></div></div>
-    <span class="bar-val">82</span>
-  </div>
-  <div class="bar-row">
-    <span class="bar-label">Movimento</span>
-    <div class="bar-bg"><div class="bar-fill" style="width:79%;background:#378ADD;"></div></div>
-    <span class="bar-val">79</span>
   </div>
   
-  <div class="tags">
-    <span class="tag tag-pos">BTD + Priority Review</span> <span class="tag tag-pos">Short interest 14.9%</span> <span class="tag tag-pos">Insider buying maggio</span>
-    <span class="tag tag-neg">Tepezza-OBI competitor</span> <span class="tag tag-neg">Diluizione 359M</span>
-  </div>
-</div>
-
-  <div class="footer">
-    PharmaCatalyst · Aggiornato automaticamente ogni mattina · Non e consulenza finanziaria
-  </div>
+  <div class="section"><div class="section-title">Opportunita attive</div><div class="card">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <div class="ticker">VRDN</div>
+                  <div class="company-name">Viridian Therapeutics</div>
+                  <div class="drug-info">Veligrotug · Thyroid Eye Disease cronica</div>
+                </div>
+                <div class="card-header-right"><span class="badge badge-green">PDUFA</span><span class="badge badge-gray">POSIZIONE APERTA</span><div class="ev-value green">EV +38.2%</div></div>
+              </div>
+              <div class="card-body">
+                <div class="card-section">
+                  <div class="card-section-title">Prezzo e livelli</div>
+                  <div class="price-block"><div class="price-big">$17.36</div><span class="price-change red">-0.52%</span></div>
+                  <div class="price-meta">52wk: $13.18 — $34.29 · -49.4% dal picco</div>
+                  <div class="levels-row">
+              <div class="level-box"><div class="level-label">Stop Loss</div><div class="level-value stop">$13.50</div><div class="level-pct">-22.2%</div></div>
+              <div class="level-box"><div class="level-label">Target 1 (meta)</div><div class="level-value target">$25.00</div><div class="level-pct">+44.0%</div></div>
+              <div class="level-box"><div class="level-label">Target 2 (resto)</div><div class="level-value target">$30.00</div><div class="level-pct">+72.8%</div></div>
+              <div class="level-box"><div class="level-label">Entry Price</div><div class="level-value">$17.19</div><div class="level-pct"><span style="font-size:13px;font-weight:600;color:#1D9E75">P&L: +1.0%</span></div></div>
+            </div>
+                </div>
+                <hr class="divider">
+                <div class="card-section">
+                  <div class="card-section-title">Dati compagnia</div>
+                  <div class="fields-grid">
+                    <div class="field"><div class="field-label">Market Cap</div><div class="field-value">$1.9B</div></div>
+                    <div class="field"><div class="field-label">Cash</div><div class="field-value green">$762M</div></div>
+                    <div class="field"><div class="field-label">Float</div><div class="field-value">103.0M</div></div>
+                    <div class="field"><div class="field-label">Short Interest</div><div class="field-value amber">13.4%</div></div>
+                  </div>
+                </div>
+                <hr class="divider">
+                <div class="card-section">
+                  <div class="card-section-title">Catalista e status regolatorio</div>
+                  <div class="fields-grid-3">
+                    <div class="field"><div class="field-label">Tipo</div><div class="field-value">PDUFA</div></div>
+                    <div class="field"><div class="field-label">Data</div><div class="field-value">2026-06-30</div></div>
+                    <div class="field"><div class="field-label">Affidabilita</div><div class="field-value green">CERTA</div></div>
+                  </div>
+                  <div style="margin-top:10px"><span class="badge badge-green" style="margin-right:4px">Breakthrough Therapy</span><span class="badge badge-green" style="margin-right:4px">Priority Review</span></div>
+                </div>
+                <hr class="divider">
+                <div class="card-section">
+                  <div class="card-section-title">Score</div>
+                  <div class="score-section">
+                    <div class="score-row"><span class="score-label">Scientifico</span><div class="score-bar-bg"><div class="score-bar-fill" style="width:82%;background:#1D9E75"></div></div><span class="score-val" style="color:#1D9E75">82</span></div>
+                    <div class="score-row"><span class="score-label">Movimento</span><div class="score-bar-bg"><div class="score-bar-fill" style="width:79%;background:#378ADD"></div></div><span class="score-val" style="color:#378ADD">79</span></div>
+                    <div class="score-row"><span class="score-label">EV stimato</span><div class="score-bar-bg"><div class="score-bar-fill" style="width:57%;background:#EF9F27"></div></div><span class="score-val" style="color:#EF9F27">+38%</span></div>
+                  </div>
+                </div>
+                <hr class="divider">
+                <div class="card-section">
+                  <div class="card-section-title">Segnali e rischi</div>
+                  <div class="tags"><span class="tag tag-pos">checkmark BTD + Priority Review</span><span class="tag tag-pos">checkmark Short interest 14.9%</span><span class="tag tag-pos">checkmark Insider buying maggio</span><span class="tag tag-neg">warning Tepezza-OBI competitor</span><span class="tag tag-neg">warning Diluizione 359M</span></div>
+                </div>
+                <hr class="divider">
+                <div class="card-section">
+                  <div class="card-section-title">Log aggiornamenti (ultimi 7 giorni)</div>
+                  <div style="font-size:13px;color:#8e8e93;padding:8px 0">Nessun aggiornamento recente.</div>
+                </div>
+                
+              </div>
+            </div></div>
+  <div class="footer">PharmaCatalyst · Aggiornato automaticamente ogni mattina · Non e consulenza finanziaria</div>
 </div>
 </body>
 </html>
