@@ -3,21 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PharmaCatalyst</title>
+<title>PharmaCatalyst — 29 May 2026</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f7; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-  .box { background: white; border-radius: 16px; padding: 48px; text-align: center; max-width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-  .logo { font-size: 22px; font-weight: 600; margin-bottom: 16px; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f7; color: #1d1d1f; }
+  .nav { background: white; padding: 14px 24px; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-size: 16px; font-weight: 600; }
   .logo span { color: #1D9E75; }
-  p { font-size: 14px; color: #6e6e73; line-height: 1.6; }
+  .nav-right { font-size: 13px; color: #6e6e73; }
+  .main { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .metric { background: white; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .metric-label { font-size: 12px; color: #6e6e73; margin-bottom: 6px; }
+  .metric-value { font-size: 24px; font-weight: 600; }
+  .metric-value.green { color: #1D9E75; }
+  .metric-value.red { color: #D85A30; }
+  .section-title { font-size: 11px; font-weight: 600; color: #6e6e73; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+  .card { background: white; border-radius: 12px; padding: 18px 20px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border-left: 3px solid transparent; }
+  .card.action { border-left-color: #D85A30; }
+  .card.entra { border-left-color: #1D9E75; }
+  .card.watch { border-left-color: #378ADD; }
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+  .ticker { font-size: 16px; font-weight: 600; }
+  .company { font-size: 13px; color: #6e6e73; margin-top: 2px; }
+  .badges { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .badge { font-size: 11px; padding: 3px 9px; border-radius: 20px; font-weight: 500; }
+  .badge-green { background: #e1f5ee; color: #0f6e56; }
+  .badge-amber { background: #faeeda; color: #854f0b; }
+  .badge-blue { background: #e6f1fb; color: #185fa5; }
+  .badge-red { background: #faece7; color: #993c1d; }
+  .badge-gray { background: #f0f0f0; color: #555; }
+  .ev { font-size: 15px; font-weight: 600; color: #1D9E75; }
+  .ev.warn { color: #EF9F27; }
+  .fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
+  .field-label { font-size: 11px; color: #8e8e93; margin-bottom: 2px; }
+  .field-value { font-size: 13px; font-weight: 500; }
+  .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .bar-label { font-size: 11px; color: #8e8e93; width: 56px; }
+  .bar-bg { flex: 1; height: 4px; background: #f0f0f0; border-radius: 2px; }
+  .bar-fill { height: 100%; border-radius: 2px; }
+  .bar-val { font-size: 11px; font-weight: 500; width: 28px; text-align: right; color: #555; }
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+  .tag-pos { background: #eaf3de; color: #3b6d11; }
+  .tag-neg { background: #fcebeb; color: #a32d2d; }
+  .alert-box { background: #fff8e1; border: 1px solid #ffe082; border-radius: 10px; padding: 14px 16px; margin-bottom: 24px; }
+  .alert-title { font-size: 13px; font-weight: 600; color: #e65100; margin-bottom: 8px; }
+  .alert-item { font-size: 13px; color: #555; padding: 4px 0; border-bottom: 1px solid #fff3cd; }
+  .alert-item:last-child { border-bottom: none; }
+  .wait-box { background: white; border-radius: 12px; padding: 32px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .wait-title { font-size: 18px; font-weight: 600; color: #1d1d1f; margin-bottom: 8px; }
+  .wait-sub { font-size: 14px; color: #6e6e73; }
+  .footer { text-align: center; font-size: 11px; color: #8e8e93; padding: 24px 0; }
+  @media (max-width: 600px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .fields { grid-template-columns: repeat(2, 1fr); }
+  }
 </style>
 </head>
 <body>
-<div class="box">
+<nav class="nav">
   <div class="logo">Pharma<span>Catalyst</span></div>
-  <p>Sistema attivo. In attesa della prima scansione mensile.<br><br>
-  Vai su GitHub Actions → Monthly Scan → Run workflow per avviare la prima scansione manualmente.</p>
+  <div class="nav-right">Aggiornato 14:05 · 29 May 2026</div>
+</nav>
+<div class="main">
+
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-label">Opportunita attive</div>
+      <div class="metric-value ">0</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Azioni richieste</div>
+      <div class="metric-value ">0</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">In watchlist</div>
+      <div class="metric-value">0</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">EV medio</div>
+      <div class="metric-value green">+0.0%</div>
+    </div>
+  </div>
+
+  
+
+  <div class="section-title">Opportunita attive</div>
+        <div class="wait-box">
+          <div class="wait-title">Nessuna opportunita sopra soglia</div>
+          <div class="wait-sub">Il sistema non ha trovato trade che rispettano i criteri minimi.<br>Aspetta la prossima scansione mensile.</div>
+        </div>
+
+  <div class="footer">
+    PharmaCatalyst · Aggiornato automaticamente ogni mattina · Non e consulenza finanziaria
+  </div>
 </div>
 </body>
 </html>
